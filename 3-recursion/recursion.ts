@@ -107,3 +107,23 @@ function getMax(firstNode: ListNode | null, max: number = 0): number {
 }
 
 console.log('Max element in a list', getMax(firstNode))
+
+
+/**
+ * Quick sort
+ * @param arr
+ */
+function quickSort(arr: number[]): number[] {
+    if (arr.length < 2) {
+        return arr
+    } else {
+        let pivot = arr[0]
+        arr.splice(0, 1)
+        let less = arr.filter(el => el <= pivot)
+        let greater = arr.filter(el => el > pivot)
+
+        return [...quickSort(less), pivot, ...quickSort(greater)]
+    }
+}
+
+console.log('Quick sort', quickSort([10, 15, 5, 7, 1, 9]))
