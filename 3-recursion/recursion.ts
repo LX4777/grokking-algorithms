@@ -34,24 +34,28 @@ console.log('Sum of array', sum([2, 33]))
  * Sum of List's elements
  */
 class ListNode {
-    next: ListNode | null
-    val: number
+    private next: ListNode | null
+    private val: number
 
     constructor(val: number, next: ListNode | null = null) {
         this.next = next
         this.val = val
     }
 
-    set(val: number) {
+    setVal(val: number): this {
         this.val = val
+
+        return this
     }
 
     getVal(): number {
         return this.val
     }
 
-    setNext(next: ListNode | null) {
+    setNext(next: ListNode | null): this {
         this.next = next
+
+        return this
     }
 
     getNext(): ListNode | null {
@@ -84,3 +88,22 @@ function countOfList(firstNode: ListNode | null): number {
 }
 
 console.log('Count of list`s elements', countOfList(firstNode))
+
+/**
+ * Max element in a list
+ * @param firstNode
+ * @param max
+ */
+function getMax(firstNode: ListNode | null, max: number = 0): number {
+    if (firstNode === null) {
+        return max;
+    }
+
+    if (firstNode.getVal() > max) {
+        max = firstNode.getVal()
+    }
+
+    return getMax(firstNode.getNext(), max)
+}
+
+console.log('Max element in a list', getMax(firstNode))
