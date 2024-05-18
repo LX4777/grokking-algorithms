@@ -66,11 +66,21 @@ let thirdNode = new ListNode(9)
 secondNode.setNext(thirdNode)
 
 function sumOfList(firstNode: ListNode | null): number {
-    if (firstNode === null) return 0
-
-    return firstNode.getNext() === null
-        ? firstNode.getVal()
+    return firstNode === null
+        ? 0
         : firstNode.getVal() + sumOfList(firstNode.getNext())
 }
 
-console.log('Sum of list', sumOfList(firstNode))
+console.log('Sum of list`s elements', sumOfList(firstNode))
+
+/**
+ * Count of list's elements
+ * @param firstNode
+ */
+function countOfList(firstNode: ListNode | null): number {
+    return firstNode === null
+        ? 0
+        : 1 + countOfList(firstNode.getNext())
+}
+
+console.log('Count of list`s elements', countOfList(firstNode))
