@@ -1,29 +1,29 @@
-export class GraphNode {
-  private val: number;
-  private next: GraphNode[] | null;
+export class GraphNode<T> {
+  private val: T;
+  private next: GraphNode<T>[] | null;
 
-  constructor(val: number, next: GraphNode[] = null) {
+  constructor(val: T, next: GraphNode<T>[] = null) {
     this.val = val;
     this.next = next;
   }
 
-  getVal(): number {
+  getVal(): T {
     return this.val;
   }
 
-  setVal(val: number): void {
+  setVal(val: T): void {
     this.val = val;
   }
 
-  getNext(): GraphNode[] | null {
+  getNext(): GraphNode<T>[] | null {
     return this.next;
   }
 
-  setNext(next: GraphNode[] | null): void {
+  setNext(next: GraphNode<T>[] | null): void {
     this.next = next;
   }
 
-  pushNext(graph: GraphNode): void {
+  pushNext(graph: GraphNode<T>): void {
     this.next.push(graph);
   }
 
