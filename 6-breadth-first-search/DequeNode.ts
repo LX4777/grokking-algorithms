@@ -1,10 +1,10 @@
 export class DequeNode<T> {
-  private val: number;
+  private val: T;
   private next: DequeNode<T> | null;
   private prev: DequeNode<T> | null;
 
   constructor(
-    val: number,
+    val: T,
     next: DequeNode<T> | null = null,
     prev: DequeNode<T> | null = null
   ) {
@@ -13,11 +13,11 @@ export class DequeNode<T> {
     this.prev = prev;
   }
 
-  setVal(val: number): void {
+  setVal(val: T): void {
     this.val = val;
   }
 
-  getVal(): number {
+  getVal(): T {
     return this.val;
   }
 
