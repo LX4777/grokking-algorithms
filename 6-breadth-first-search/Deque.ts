@@ -1,27 +1,44 @@
 import { DequeNode } from "./DequeNode";
 
 export class Deque<T> {
-  private head: DequeNode<T>;
-  private current: DequeNode<T>;
-  private tail: DequeNode<T>;
+  private head: DequeNode<T> | null = null;
+  private current: DequeNode<T> | null = null;
+  private tail: DequeNode<T> | null = null;
 
-  constructor(head: DequeNode<T>) {
-    this.head = head;
-    this.current = head;
+  constructor(head: DequeNode<T> | T[]) {
+    if (head instanceof DequeNode) {
+      this.head = head;
+      this.current = head;
 
-    let temp = head;
-    while (temp.getNext() !== null) {
-      temp = temp.getNext();
+      let temp: DequeNode<T> | null = head;
+      while (temp && temp.getNext() !== null) {
+        temp = temp.getNext();
+      }
+
+      this.tail = temp;
+
+      return;
     }
 
-    this.tail = temp;
+    if (Array.isArray(head)) {
+      if (head.length === 0) {
+        this.head = null;
+        this.current = null;
+        this.tail = null;
+
+        return;
+      }
+
+      head.forEach((el) => this.pushRight(new DequeNode(el)));
+      return;
+    }
   }
 
-  getHead(): DequeNode<T> {
+  getHead(): DequeNode<T> | null {
     return this.head;
   }
 
-  getTail(): DequeNode<T> {
+  getTail(): DequeNode<T> | null {
     return this.tail;
   }
 
@@ -29,35 +46,49 @@ export class Deque<T> {
     this.current = this.head;
   }
 
-  getCurrent(): DequeNode<T> {
+  getCurrent(): DequeNode<T> | null {
     return this.current;
   }
 
   next(): void {
-    if (this.current.getNext() !== null) {
+    if (this.current && this.current.getNext() !== null) {
       this.current = this.current.getNext();
     }
   }
 
   prev(): void {
-    if (this.current.getPrev() !== null) {
+    if (this.current && this.current.getPrev() !== null) {
       this.current = this.current.getPrev();
     }
   }
 
   shift(): DequeNode<T> | null {
+    if (this.head === null) {
+      return null;
+    }
+
     let popped = this.head;
     this.head = this.head.getNext();
-    this.head.setPrev(null);
+
+    if (this.head !== null) {
+      this.head.setPrev(null);
+    }
+
     popped.setNext(null);
 
     return popped;
   }
 
   pop(): DequeNode<T> | null {
+    if (this.tail === null) {
+      return null;
+    }
+
     const popped = this.tail;
     this.tail = this.tail.getPrev();
-    this.tail.setNext(null);
+    if (this.tail !== null) {
+      this.tail.setNext(null);
+    }
     popped.setPrev(null);
 
     return popped;
@@ -65,13 +96,45 @@ export class Deque<T> {
 
   pushLeft(newNode: DequeNode<T>): void {
     newNode.setNext(this.head);
-    this.head.setPrev(newNode);
+    if (this.head !== null) {
+      this.head.setPrev(newNode);
+    }
     this.head = newNode;
+
+    if (this.tail === null) {
+      this.tail = this.head;
+    }
   }
 
   pushRight(newNode: DequeNode<T>): void {
     newNode.setPrev(this.tail);
-    this.tail.setNext(newNode);
+    if (this.tail !== null) {
+      this.tail.setNext(newNode);
+    }
     this.tail = newNode;
+
+    if (this.head === null) {
+      this.head = this.tail;
+    }
+  }
+
+  toArray(): T[] {
+    if (this.head === null) {
+      return [];
+    }
+
+    let pointer: DequeNode<T> | null = this.head;
+    let result: T[] = [];
+
+    while (pointer !== null) {
+      result.push(pointer.getVal());
+      pointer = pointer.getNext();
+    }
+
+    return result;
+  }
+
+  print(): void {
+    console.log(this.toArray());
   }
 }
