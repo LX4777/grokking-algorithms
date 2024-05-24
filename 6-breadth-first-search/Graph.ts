@@ -1,8 +1,8 @@
-export class GraphNode<T> {
+export class Graph<T> {
   private val: T;
-  private next: GraphNode<T>[] | null;
+  private next: Graph<T>[];
 
-  constructor(val: T, next: GraphNode<T>[] = null) {
+  constructor(val: T, next: Graph<T>[] = []) {
     this.val = val;
     this.next = next;
   }
@@ -15,15 +15,15 @@ export class GraphNode<T> {
     this.val = val;
   }
 
-  getNext(): GraphNode<T>[] | null {
+  getNext(): Graph<T>[] {
     return this.next;
   }
 
-  setNext(next: GraphNode<T>[] | null): void {
+  setNext(next: Graph<T>[]): void {
     this.next = next;
   }
 
-  pushNext(graph: GraphNode<T>): void {
+  pushNext(graph: Graph<T>): void {
     this.next.push(graph);
   }
 
