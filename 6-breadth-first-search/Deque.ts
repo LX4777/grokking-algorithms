@@ -2,7 +2,7 @@ import { DequeNode } from "./DequeNode";
 
 export class Deque<T> {
   private head: DequeNode<T> | null = null;
-  private current: DequeNode<T> | null = null;
+  private current: DequeNode<T> | null = null; // maybe should delete
   private tail: DequeNode<T> | null = null;
 
   constructor(head: DequeNode<T> | T[]) {
@@ -116,6 +116,10 @@ export class Deque<T> {
     if (this.head === null) {
       this.head = this.tail;
     }
+  }
+
+  pushRightFromArray(array: T[]): void {
+    array.forEach((el) => this.pushRight(new DequeNode<T>(el)));
   }
 
   toArray(): T[] {
