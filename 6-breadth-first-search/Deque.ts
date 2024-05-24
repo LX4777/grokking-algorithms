@@ -133,8 +133,4 @@ export class Deque<T> {
 
     return result;
   }
-
-  print(): void {
-    console.log(this.toArray());
-  }
 }
