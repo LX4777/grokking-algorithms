@@ -1,18 +1,19 @@
 import { Deque } from "./Deque";
 import { Graph } from "./Graph";
 
-let arr = [0, 1, 4, 6];
+function dequeBlock() {
+  let arr = [0, 1, 4, 6];
+  let deque = new Deque<number>(arr);
 
-let deque = new Deque<number>(arr);
-
-console.log(deque.toArray());
-
-type Person = {
-  name: string;
-  seller: boolean;
-};
+  console.log(deque.toArray());
+}
 
 function findSellerBlock() {
+  type Person = {
+    name: string;
+    seller: boolean;
+  };
+
   function newPerson(name: string, seller: boolean) {
     return new Graph<Person>({
       name,
@@ -58,5 +59,7 @@ function findSellerBlock() {
 
   console.log(findSeller(you));
 }
+
+dequeBlock();
 
 findSellerBlock();
