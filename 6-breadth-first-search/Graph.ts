@@ -15,8 +15,12 @@ export class Graph<T> {
     this.val = val;
   }
 
-  getNext(): Graph<T>[] {
-    return this.next;
+  getNext<U extends boolean>(toArray: U): U extends true ? T[] : Graph<T>[] {
+    return (
+      toArray && Array.isArray(this.next)
+        ? this.next.map((el) => el.val)
+        : this.next
+    ) as U extends true ? T[] : Graph<T>[];
   }
 
   setNext(next: Graph<T>[]): void {
