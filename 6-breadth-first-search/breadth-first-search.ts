@@ -28,7 +28,7 @@ function findSellerBlock() {
   const anuj = newPerson("Anuj", false);
   const tom = newPerson("Tom", false);
   const johny = newPerson("Johny", false);
-  const peggy = newPerson("Peggy", false);
+  const peggy = newPerson("Peggy", true);
 
   claire.setNext([tom, johny]);
   bob.setNext([peggy, anuj]);
@@ -37,6 +37,7 @@ function findSellerBlock() {
 
   function findSeller(graph: Graph<Person>) {
     let deque: Deque<Graph<Person>> = new Deque(graph.getNext(false));
+    let searched: Graph<Person>[] = [];
 
     while (deque.getHead()) {
       const person = deque.shift();
@@ -46,6 +47,12 @@ function findSellerBlock() {
         if (graphVal.getVal().seller) {
           return `${graphVal.getVal().name} is a seller`;
         } else {
+          // @ts-ignore
+          if (searched.find((el: Graph<Person>) => el === graphVal)) {
+            continue;
+          }
+          searched.push(graphVal);
+
           let next = graphVal.getNext(false);
           if (Array.isArray(next)) {
             deque.pushRightFromArray(next);
