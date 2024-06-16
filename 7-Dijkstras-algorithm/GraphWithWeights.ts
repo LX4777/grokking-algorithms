@@ -71,4 +71,19 @@ export class GraphWithWeights<ValueType, WeightType> {
   delete(index: number): void {
     this.next.splice(index, 1);
   }
+
+  lowerCostNextNode(): NodeWithWeight<
+    GraphWithWeights<ValueType, WeightType>,
+    WeightType
+  > | null {
+    if (this.next.length === 0) {
+      return null;
+    }
+
+    return this.next.reduce((min, node) => {
+      if (node.getWeight() < min.getWeight()) {
+        return node;
+      }
+    }, this.next[0]);
+  }
 }
